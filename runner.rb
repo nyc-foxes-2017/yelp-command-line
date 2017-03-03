@@ -1,13 +1,10 @@
-#gem install yelp
-require_relative 'yelp'
+require_relative './models/client'
+require_relative './views/viewer'
+require_relative './controllers/yelp_controller'
 require 'yelp'
+include YelpController
 
-client = Yelp::Client.new({ consumer_key: "2pm0e_hmLDFRe-nikc-SEQ",
-                            consumer_secret: "2Q2ihT6vOj7WeRGiPZIuW3UKtSo",
-                            token: "LXsOwK1evCVJdXBoLcStVs0-NSaiTWQx",
-                            token_secret: "SJjxY1eVvrUNY6psfOoOIV6SFIg"
-                          })
-
+client = Client.new.client
 
 if ARGV.any?
   command = ARGV[0]
@@ -21,11 +18,11 @@ if ARGV.any?
     location = ARGV[find+1..-1].join(" ")
     case command
     when "search"
-      then search(string, location, client)
+      then YelpController.search(string, location, client)
     when "best"
-      then search(string, location, client)
+      then YelpController.search(string, location, client)
     when "closest"
-      then closest(string, location, client)
+      then YelpController.closest(string, location, client)
     else
       p "command #{command} not recognized"
     end
