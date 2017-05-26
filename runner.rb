@@ -3,9 +3,11 @@ require_relative './views/viewer'
 require_relative './controllers/yelp_controller'
 require 'yelp'
 include YelpController
+require 'pry'
+require 'pry-byebug'
 
 client = Client.new.client
-
+binding.pry
 if ARGV.any?
   command = ARGV[0]
   if ARGV[1].nil?
